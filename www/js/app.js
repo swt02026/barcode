@@ -9,7 +9,7 @@ function startScan() {
               'Error QRCode: ' + result.text,  // message
               null,                            // callback
               'Scan result',                   // title
-              'Sucess'                         // buttonName
+              'Rescan'                         // buttonName
           );
       },
       (error) => {
