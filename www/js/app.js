@@ -1,13 +1,13 @@
 var resultDiv;
 function startScan() {
-  alert('click');
   cordova.plugins.barcodeScanner.scan(
       (result) => {
         var s = 'Result: ' + result.text + '<br/>' +
             'Format: ' + result.format + '<br/>' +
             'Cancelled: ' + result.cancelled;
         resultDiv.html(s);
-        window.location = result.text;
+        let url = new URL(result.text);
+        if (url.hostname === 'fish.mowei.com.tw') window.location = result.text;
       },
       (error) => {
         alert('Scanning failed: ' + error);
