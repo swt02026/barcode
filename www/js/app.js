@@ -2,11 +2,23 @@ function startScan() {
   cordova.plugins.barcodeScanner.scan(
       (result) => {
         let url = new URL(result.text);
-        if (url.hostname === 'fish.mowei.com.tw') window.location = result.text;
-        alert('Error QRCode: ' + url.hostname);
+        if (url.hostname === 'fish.mowei.com.tw')
+          window.location = result.text;
+        else
+          navigator.notification.alert(
+              'Error QRCode: ' + result.text,  // message
+              null,                            // callback
+              'Scan result',                   // title
+              'Sucess'                         // buttonName
+          );
       },
       (error) => {
-        alert('Scanning failed: ' + error);
+        navigator.notification.alert(
+            'Scanning failed: ' + error,  // message
+            null,                         // callback
+            'Scan result',                // title
+            'Rescan'                      // buttonName
+        );
       });
 }
 

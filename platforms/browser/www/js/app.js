@@ -1,22 +1,29 @@
-var resultDiv;
 function startScan() {
-  alert('click');
   cordova.plugins.barcodeScanner.scan(
       (result) => {
-        var s = 'Result: ' + result.text + '<br/>' +
-            'Format: ' + result.format + '<br/>' +
-            'Cancelled: ' + result.cancelled;
-        resultDiv.html(s);
-        window.location = result.text;
+        let url = new URL(result.text);
+        if (url.hostname === 'fish.mowei.com.tw')
+          window.location = result.text;
+        else
+          navigator.notification.alert(
+              'Error QRCode: ' + result.text,  // message
+              null,                            // callback
+              'Scan result',                   // title
+              'Sucess'                         // buttonName
+          );
       },
       (error) => {
-        alert('Scanning failed: ' + error);
+        navigator.notification.alert(
+            'Scanning failed: ' + error,  // message
+            null,                         // callback
+            'Scan result',                // title
+            'Rescan'                      // buttonName
+        );
       });
 }
 
 function init() {
   $('#startScan').click(startScan);
-  resultDiv = $('#results');
 }
 
 document.addEventListener('deviceready', init, false);
